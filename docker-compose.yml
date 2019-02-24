@@ -1,0 +1,27 @@
+version: '2.2'
+services:
+  web:
+    image: aspendigital/octobercms:latest
+    ports:
+      - 80:80
+    environment:
+      - DB_TYPE=mysql
+      - DB_HOST=mysql #DB_HOST should match the service name of the database container
+      - DB_DATABASE=octobercms
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+    volumes:
+      - ./config:/var/www/html/config
+      - ./modules:/var/www/html/modules
+      - ./plugins:/var/www/html/plugins
+      - ./storage:/var/www/html/storage
+      - ./tests:/var/www/html/tests
+      - ./themes:/var/www/html/themes
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=octobercms
